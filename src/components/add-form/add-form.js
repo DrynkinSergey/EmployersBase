@@ -16,10 +16,13 @@ class AddForm extends Component {
     }
     render() {
         const {name, salary} = this.state;
+        const {addItem} = this.props;
         return (
             <div className="app-add-form">
                 <h3>Добавьте нового сотрудника</h3>
-                <form className="add-form d-flex">
+                <form
+                    onSubmit={(e)=> addItem(e,name,salary)}
+                    className="add-form d-flex">
                     <input
                         onChange={this.onInputChange}
                         value={name}

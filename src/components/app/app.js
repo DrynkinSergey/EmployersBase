@@ -14,7 +14,8 @@ class App extends Component {
             data: [
                 {name: 'Sergey', salary: 1400, increase: false, id: 1},
                 {name: 'Andrew', salary: 400, increase: false, id: 2},
-                {name: 'Sasha', salary: 1000, increase: false, id: 3}]
+                {name: 'Sasha', salary: 1000, increase: false, id: 3}],
+            totalId:3
         }
     }
 
@@ -24,6 +25,18 @@ class App extends Component {
                 data: data.filter(item => item.id !== id)
             }
         })
+    }
+    onAdd = (e,name,salary) => {
+    e.preventDefault();
+    const initial = {name, salary, increase: false, id: this.state.totalId+1};
+
+        this.setState(({data, totalId}) => {
+           return {
+               data: [...data, initial],
+               totalId: totalId+1
+           }
+       })
+        console.log(e.currentTarget);
     }
 
     render() {
@@ -41,7 +54,7 @@ class App extends Component {
                     // deleteItem ={this.onDelete(data.id)}
                     deleteItem={this.onDelete}
                 />
-                <AddForm/>
+                <AddForm addItem = {this.onAdd}/>
             </div>
         );
     }
