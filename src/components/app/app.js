@@ -10,9 +10,10 @@ import AddForm from "../add-form/add-form";
 function App() {
 
     const data = [
-        {name: 'Sergey', salary:1400, increase: true, id:1 },
+        {name: 'Sergey', salary:1400, increase: false, id:1 },
         {name: 'Andrew', salary:400, increase: false, id:2 },
         {name: 'Sasha', salary:1000, increase: false, id:3 },
+
     ]
 
     return (
