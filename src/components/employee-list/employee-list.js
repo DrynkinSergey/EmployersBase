@@ -2,10 +2,10 @@ import React from 'react';
 import EmployeesListItem from "../employee-list-item/employee-list-item";
 import './employee-list.css'
 
-const EmployeeList = ({data}) => {
+const EmployeeList = ({data,deleteItem}) => {
     const employees = data.map( item => {
             return (
-               <EmployeesListItem  key={item.id} {...item}/>
+               <EmployeesListItem onDelete={()=> deleteItem(item.id)}  key={item.id} {...item}/>
             )
         }
     );
