@@ -12,10 +12,10 @@ class App extends Component {
         super(props);
         this.state = {
             data: [
-                {name: 'Sergey', salary: 1400, increase: false, id: 1},
-                {name: 'Andrew', salary: 400, increase: false, id: 2},
-                {name: 'Sasha', salary: 1000, increase: false, id: 3}],
-            totalId:3
+                {name: 'Sergey', salary: 1400, increase: false, id: 1, rise: false},
+                {name: 'Andrew', salary: 400, increase: false, id: 2, rise: false},
+                {name: 'Sasha', salary: 1000, increase: false, id: 3, rise: false}],
+            totalId: 3
         }
     }
 
@@ -26,39 +26,73 @@ class App extends Component {
             }
         })
     }
-    onAdd = (e,name,salary) => {
-    e.preventDefault();
-    const initial = {name, salary, increase: false, id: this.state.totalId+1};
+
+
+    onToggleIncrease = (id) => {
+        this.setState(({data}) => ({
+            data: data.map(item => {
+                if (item.id === id) {
+                    return {...item, increase: !item.increase}
+                }
+                return item;
+            })
+        }))
+
+    }
+
+    onToggleRise = (id) => {
+        this.setState(({data}) => ({
+            data: data.map(item => {
+                if (item.id === id) {
+                    return {...item, rise: !item.rise}
+                }
+                return item;
+            })
+        }))
+    }
+
+    onAdd = (e, name, salary) => {
+        e.preventDefault();
+        const initial = {name, salary, increase: false, id: this.state.totalId + 1, rise: false};
 
         this.setState(({data, totalId}) => {
-           return {
-               data: [...data, initial],
-               totalId: totalId+1
-           }
-       })
-        console.log(e.currentTarget);
+            return {
+                data: [...data, initial],
+                totalId: totalId + 1
+            }
+        })
     }
+
 
     render() {
         const {data} = this.state;
+        let count = 0;
+
+       data.forEach(item => {
+            if (item.rise === true) {
+                count++
+            }
+        })
 
         return (
             <div className="app">
-                <AppInfo/>
+                <AppInfo countOfUsers={data.length}
+                    riseCount = {count}
+                />
                 <div className="search-panel">
                     <SearchPanel/>
                     <AppFilter/>
                 </div>
                 <EmployeeList
                     data={data}
-                    // deleteItem ={this.onDelete(data.id)}
                     deleteItem={this.onDelete}
+                    riseEmployee={this.onToggleRise}
+                    increaseEmployee={this.onToggleIncrease}
                 />
-                <AddForm addItem = {this.onAdd}/>
+                <AddForm addItem={this.onAdd}/>
             </div>
         );
     }
-
 }
 
 export default App;

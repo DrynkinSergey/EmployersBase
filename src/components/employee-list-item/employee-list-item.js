@@ -1,51 +1,28 @@
-import {Component} from "react";
 import './employee-list-item.css';
 
-class EmployeesListItem extends Component {
-   /*
+const EmployeesListItem = (props) =>  {
 
-   */
-    constructor(props) {
-        super(props);
-        this.state = {
-            increase: false,
-            liked: false
-        }
-    }
-    setIncrease = () => {
-        this.setState(({increase}) => ({
-            increase:!increase
-            })
-        )
-    }
-    onUserNameClick = () => {
-        this.setState(({liked}) => ({
-            liked:!liked
-            })
-        )
-    }
-    render(){
-        const {name, salary, onDelete} = this.props;
-        const {increase,liked} = this.state;
+        const {name, increase, rise, salary, onDelete, riseEmployee, increaseEmployee} = props;
+
         let classNames = "list-group-item d-flex justify-content-between";
-        if (increase){
+        if (increase) {
             classNames += " increase"
         }
-        if (liked){
+        if (rise) {
             classNames += " like"
         }
         return (
             <li className={classNames}>
-                <span onClick={this.onUserNameClick} className="list-group-item-label ">{name} Smith</span>
-                <input type="text" className="list-group-item-input" defaultValue={salary+'$'}/>
+                <span onClick={riseEmployee} className="list-group-item-label ">{name} Smith</span>
+                <input type="text" className="list-group-item-input" defaultValue={salary + '$'}/>
                 <div className='d-flex justify-content-center align-items-center'>
-                    <button onClick={this.setIncrease} type="button"
+                    <button onClick={increaseEmployee} type="button"
                             className="btn-cookie btn-sm ">
                         <i className="fas fa-cookie"></i>
                     </button>
 
                     <button type="button"
-                            onClick={()=> onDelete()}
+                            onClick={() => onDelete()}
                             className="btn-trash btn-sm ">
                         <i className="fas fa-trash"></i>
                     </button>
@@ -53,7 +30,7 @@ class EmployeesListItem extends Component {
                 </div>
             </li>
         )
-    }
+
 
 }
 
