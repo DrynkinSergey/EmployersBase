@@ -12,10 +12,12 @@ class App extends Component {
         super(props);
         this.state = {
             data: [
-                {name: 'Sergey', salary: 1400, increase: false, id: 1, rise: false},
+                {name: 'Sergey', salary: 1400, increase: false, id: 1, rise: true},
                 {name: 'Andrew', salary: 400, increase: false, id: 2, rise: false},
                 {name: 'Sasha', salary: 1000, increase: false, id: 3, rise: false}],
-            totalId: 3
+            totalId: 3,
+            findString: '',
+            filter:''
         }
     }
 
@@ -28,27 +30,18 @@ class App extends Component {
     }
 
 
-    onToggleIncrease = (id) => {
+    onToggleProps = (id, prop) => {
         this.setState(({data}) => ({
             data: data.map(item => {
                 if (item.id === id) {
-                    return {...item, increase: !item.increase}
+                    return {...item, [prop]: !item[prop]}
                 }
                 return item;
             })
         }))
-
     }
+    onToggleFilterBtn = (prop) => {
 
-    onToggleRise = (id) => {
-        this.setState(({data}) => ({
-            data: data.map(item => {
-                if (item.id === id) {
-                    return {...item, rise: !item.rise}
-                }
-                return item;
-            })
-        }))
     }
 
     onAdd = (e, name, salary) => {
@@ -63,12 +56,44 @@ class App extends Component {
         })
     }
 
+    searchEmp = (items, term) => {
+        if (term.length === 0) {
+            return items
+        }
+        return items.filter(item => {
+            return item.name.indexOf(term) > -1
+        })
+    }
+
+    onSearch = (findString) => {
+        this.setState(({findString}))
+    }
+    onFilter = (filter) => {
+        this.setState(({filter}))
+    }
+
+    filterEmp = (items, filter) => {
+        switch (filter) {
+            case 'rise':
+            {
+            return items.filter(item => item.rise)
+            }
+            case 'moreThen1000':
+            {
+                return items.filter(item => item.salary > 1000)
+            }
+            default: return items
+        }
+
+    }
+
 
     render() {
-        const {data} = this.state;
+        const {data, findString, filter} = this.state;
         let count = 0;
-
-       data.forEach(item => {
+        // Делается двойной фильтр для отображения отфильтрованных данных
+        const visibleData = this.filterEmp(this.searchEmp(data,findString), filter)
+        data.forEach(item => {
             if (item.rise === true) {
                 count++
             }
@@ -77,17 +102,16 @@ class App extends Component {
         return (
             <div className="app">
                 <AppInfo countOfUsers={data.length}
-                    riseCount = {count}
+                         riseCount={count}
                 />
                 <div className="search-panel">
-                    <SearchPanel/>
-                    <AppFilter/>
+                    <SearchPanel searchItem={this.onSearch}/>
+                    <AppFilter onFilter={this.onFilter} data={data}/>
                 </div>
                 <EmployeeList
-                    data={data}
+                    data={visibleData}
                     deleteItem={this.onDelete}
-                    riseEmployee={this.onToggleRise}
-                    increaseEmployee={this.onToggleIncrease}
+                    onToggleProps={this.onToggleProps}
                 />
                 <AddForm addItem={this.onAdd}/>
             </div>
