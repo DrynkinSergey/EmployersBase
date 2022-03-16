@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/EmployersBase/static/css/main.2235bd0e.css",
+    "main.js": "/EmployersBase/static/js/main.1f75f87c.js",
+    "index.html": "/EmployersBase/index.html",
+    "main.2235bd0e.css.map": "/EmployersBase/static/css/main.2235bd0e.css.map",
+    "main.1f75f87c.js.map": "/EmployersBase/static/js/main.1f75f87c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2235bd0e.css",
+    "static/js/main.1f75f87c.js"
+  ]
+}
